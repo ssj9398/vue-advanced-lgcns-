@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="w-full max-w-xs mx-auto pt-32">
-    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="form">
       <div class="mb-4">
         <label class="block text-grey-darker text-sm font-bold mb-2" for="username">
           Username
@@ -40,8 +40,40 @@
   </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
-    $(document).ready(function() {
+     window.onload = function(){
+       var form = document.getElementById("form");
+       form.addEventListener('submit', (event) => {
+/*       $('form').on('submit', function (event) { */
+        event.preventDefault();
+
+        var username = document.getElementById("username");
+        var password = document.getElementById("password");
+
+        $.ajax({
+          url: 'https://jsonplaceholder.typicode.com/users/',
+          method: 'POST',
+          dataType: 'json',
+          contentType: "application/json; charset=UTF-8",
+          data: JSON.stringify({
+            name: username.value,
+            password: password.value
+          })
+        })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        username.value = "";
+        password.value = "";
+      });
+    } 
+
+    /* $(document).ready(function() {
       $('form').on('submit', function(event) {
         event.preventDefault();
 
@@ -68,7 +100,7 @@
         username.val('');
         password.val('');
       });
-    });
+    }); */
   </script>
 </body>
 </html>
