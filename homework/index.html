@@ -7,6 +7,7 @@
   <link href="	https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/0.7.4/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
+
   <div class="w-full max-w-xs mx-auto pt-32">
     <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="form">
       <div class="mb-4">
@@ -21,14 +22,11 @@
           Password
         </label>
         <input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
-          id="password" type="password" placeholder="******************">
+          id="password" type="password" placeholder="******" v-model="message">
         <p class="text-red text-xs italic">Please choose a password!</p>
+        <button type="submit" :disabled="message.length < 6">로그인</button>
       </div>
       <div class="flex items-center justify-between">
-        <button class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="submit">
-          Sign In
-        </button>
         <a class="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker" href="#">
           Forgot Password?
         </a>
@@ -39,15 +37,27 @@
     </p>
   </div>
 
+
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="//unpkg.com/vue"></script>
   <script>
-     window.onload = function(){
-       var form = document.getElementById("form");
-       form.addEventListener('submit', (event) => {
-/*       $('form').on('submit', function (event) { */
-        event.preventDefault();
+    var app = new Vue({
+        el: ".mb-6",
+        data: {
+          message: ""
+        }
+      })
 
+     window.onload = function(){
+       var pwd = document.getElementById("password");
+       var button = document.getElementById("button");
+       var form = document.getElementById("form");
+
+       form.addEventListener('submit', (event) => {
+
+        event.preventDefault();
+         
         var username = document.getElementById("username");
         var password = document.getElementById("password");
 
@@ -70,8 +80,12 @@
 
         username.value = "";
         password.value = "";
-      });
-    } 
+      });  
+     }
+    
+     
+    
+     
 
     /* $(document).ready(function() {
       $('form').on('submit', function(event) {
